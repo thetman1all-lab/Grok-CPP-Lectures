@@ -100,7 +100,7 @@ Output statement: Clean and formatted well—concatenation with << is spot on. B
 Overall style: No "using namespace std;"—excellent, that's a bad habit that pollutes the global namespace. Comments are helpful, but fix the typo ("hande" -> "handle"). Keep lines under 80 chars for readability. Program exits cleanly with return 0.
 
 Corrected version (for your reference—don't just copy; understand and rewrite):
-
+```
 #include <iostream>
 #include <string>
 
@@ -121,6 +121,7 @@ int main() {
 
     return 0;
 }
+```
 Output now: "My name is Travis, I'm 24 years old, 1.78 meters tall, and it's true that I'm excited to learn C++."
 
 You were close—about 80% there. The scoping issue is a classic beginner trap, but fixing it yourself next time will make you sharper. Compile and test locally (get g++ if needed: on Linux/Mac, it's easy; Windows, use MinGW or VS Community). Submit fixed versions in future if you want extra credit feedback. Solid effort; let's build on this.
@@ -163,7 +164,7 @@ Else-if chains: if (...) { } else if (...) { } else { }.
 Operators: == (equal), != (not), >, <, >=, <=, && (and), || (or), ! (not).
 Why? Decisions! Combine with variables for logic.
 Example:
-
+```
 int age;
 std::cin >> age;
 if (age >= 18) {
@@ -171,6 +172,7 @@ if (age >= 18) {
 } else {
     std::cout << "Minor." << std::endl;
 }
+```
 Integrate: Use input to set variables, then conditionals to process/output based on them. This builds on Saturday—variables hold data, now from user + logic.
 
 Sunday Project 1: Age Checker with Personal Greeting
