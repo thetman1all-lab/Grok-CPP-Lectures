@@ -208,6 +208,105 @@ Requirements:
 
 - Proper includes.
 - Handle input cleanly (prompts like "Enter name: ").
+- Under 30 lines, clean code.
+- Commit to a new GitHub repo, push, and share the repo link with your submission.
+
+Test it yourself—input different ages, see logic work. Submit code + link by end of day. This reinforces variables with input/conditionals. You've got the foundation; let's see you apply it flawlessly. I'm rooting for you—show me that progress!
+
+
+## Human
+Okay, I'm having some troubles pushing my commits to the repository. When I try to push this is what happens {screenshot attached to the prompt} and I doubly made sure the username and password were correct
+
+## Grok
+Alright, Travis—listen, this Git issue is a classic roadblock that trips up everyone starting out, and it's not your fault for missing it, but it's a brutal reminder that tech evolves fast and doesn't wait for us to catch up. You're double-checking username and password? That's good diligence, but here's the honest truth: GitHub killed password authentication for Git operations back in August 2021—it's ancient history by 2026 standards. No more plain passwords over HTTPS; it's insecure as hell, and they force better methods to prevent hacks. Your "invalid username or token" error screams exactly that. You're not typing wrong; the system just rejects passwords outright. Frustrating? Absolutely. But fixing this will make you more pro, and I'm stoked to walk you through it because seeing you conquer these setup hurdles means you're one step closer to focusing on C++ mastery without distractions. We'll get you pushing commits flawlessly, then you can submit that Sunday project.
+
+### Why This Happened and What It Means
+- **Root Cause**: GitHub deprecated password auth for HTTPS Git pushes/pulls/clones. They push (pun intended) for Personal Access Tokens (PATs) or SSH keys. Your remote is set to HTTPS (`https://github.com/tcounihan1/CPP-With-Grok/`), so it prompts for credentials, but passwords fail. Tokens act like passwords but with scoped permissions and expiration—safer.
+- **Your Setup**: From the screenshot, you're on macOS (MacBook Pro), using HTTPS remote. You initialized, added, committed fine locally (commit message is solid—descriptive and concise; keep that up). The push fails at auth.
+- **Brutal Honesty**: Ignoring this and brute-forcing passwords wastes time. Learn it now—every dev job requires secure Git workflows. Once fixed, commits become second nature, and your repo builds a killer portfolio.
+
+### Fix It: Two Options (Pick One, Start with PAT for Simplicity)
+I'll guide you step-by-step. Do this in your terminal. Test with a small change (e.g., add a comment to Project-1.cpp, commit, push).
+
+#### Option 1: Use a Personal Access Token (PAT) – Quickest for Beginners
+1. **Generate a PAT on GitHub**:
+   - Log into github.com as tcouniinhan1 (or whatever your username is—screenshot shows "tcouniinhan1", but confirm it's correct; typos there would fail too).
+   - Click your profile pic > Settings > Developer settings (left sidebar) > Personal access tokens > Tokens (classic) > Generate new token.
+   - Note: Give it a name like "CPP-Learning-Push".
+   - Expiration: Set to no expiration or 90 days (renew later).
+   - Scopes: Check "repo" (full control of private repos) – that's all you need for now.
+   - Generate token, copy it (it's a long string like ghp_abc123...). **Never share it publicly; treat like a password.**
+
+2. **Update Your Git Remote to Use the Token**:
+   - In your project folder: `git remote remove origin` (removes old remote).
+   - Add new: `git remote add origin https://<your-username>:<your-PAT>@github.com/tcounihan1/CPP-With-Grok.git`
+     - Replace <your-username> with tcouniinhan1.
+     - Replace <your-PAT> with the token (e.g., https://tcouniinhan1:ghp_abc123@github.com/tcounihan1/CPP-With-Grok.git).
+   - Verify: `git remote -v` (should show the new URL).
+
+3. **Push**:
+   - `git push -u origin main`
+   - No prompt needed now—the token's embedded (but insecure if someone sees your .git/config; better to use credential helper next).
+
+4. **Bonus: Cache the Token** (So You Don't Embed It):
+   - On macOS, use the built-in credential helper: `git config --global credential.helper osxkeychain`
+   - Then, when you push next, it'll prompt for username (your GitHub username) and password (your PAT)—enter them once, and macOS Keychain stores it securely for future pushes.
+
+#### Option 2: Switch to SSH – More Secure, No Prompts Ever (Recommended Long-Term)
+1. **Generate SSH Key** (If You Don't Have One):
+   - `ssh-keygen -t ed25519 -C "your_email@example.com"` (use your GitHub email).
+   - Hit enter for defaults (saves to ~/.ssh/id_ed25519).
+   - Set a passphrase if you want (extra security).
+
+2. **Add Key to GitHub**:
+   - Copy public key: `cat ~/.ssh/id_ed25519.pub` (copy the output).
+   - GitHub > Settings > SSH and GPG keys > New SSH key.
+   - Paste the key, title it "MacBook Pro".
+
+3. **Test SSH**: `ssh -T git@github.com` (should say "Hi tcouniinhan1! You've successfully authenticated...").
+
+4. **Update Remote to SSH**:
+   - `git remote remove origin`
+   - `git remote add origin git@github.com:tcouniinhan1/CPP-With-Grok.git`
+   - `git push -u origin main`
+
+This eliminates credential prompts forever. If it fails, check your key is added to ssh-agent: `eval "$(ssh-agent -s)"` then `ssh-add ~/.ssh/id_ed25519`.
+
+### Verify and Troubleshoot
+- After fix: Make a tiny change (e.g., add // Test comment to Project-1.cpp), `git add .`, `git commit -m "Test push after auth fix"`, `git push`.
+- Common Pitfalls:
+  - Repo name case-sensitive? Screenshot shows "CPP-With-Grok" – confirm on GitHub.
+  - Private repo? PAT needs "repo" scope.
+  - If still stuck: Run `git config --global user.name "Your Name"` and `git config --global user.email "your@email.com"` (matches GitHub).
+  - Error logs: Share full output if it fails again.
+- Pro Tip: Use GitHub Desktop app for GUI if terminal feels rough, but stick to terminal—it's where real power is.
+
+Once pushed, share the repo link (https://github.com/tcounihan1/CPP-With-Grok) so I can browse your commits. This isn't C++ yet, but nailing Git means your projects stay organized, and I can review history for how you're progressing.
+
+Now, on the C++ front: You mentioned updating Project-1.cpp—did you fix the scoping issue I pointed out? Commit that fixed version too. And where's Sunday's Age Checker project? Get Git sorted, push it, and submit the code here with the link. We're building momentum—don't let setup derail you. I'm invested in your success; fix this, and we'll dive deeper next weekend. You've got the grit; prove it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Grok (Snippet from Later Lesson on Functions)
 cautiously in real-time systems to avoid stack overflows.
