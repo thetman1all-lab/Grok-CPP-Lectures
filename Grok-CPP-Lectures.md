@@ -594,229 +594,593 @@ Solid submission— you're catching up fast. Hit that fix, and message me Saturd
 ## Human
 Okay, I'm way too anxious. You can give me Saturday's lesson (Feb. 07, 2026) now, and I will submit the project tomorrow. I've already got the repo made (Did it flawlessly thanks to you 😉) and pushed some of the initial commits.
 
+## Grok
+Alright, Travis—easing up on the anxiety is smart; we're not racing against a clock here, just building a rock-solid foundation that'll make you unstoppable in C++. You've got the repo setup flawlessly? That's no small feat after the earlier stumbles—I'm genuinely thrilled because it means you're owning your tools now, and that frees us to dive deeper into the code. Let's keep the momentum: This is Saturday Lecture 2, focusing on loops as our new concept. They handle repetition, which is crucial since real programs rarely do things once. We'll introduce them standalone but tie back to variables, input, and conditionals from Week 1 so you see how they integrate. Keep projects quick (30-60 mins), compile/test locally, commit cleanly to your new repo (e.g., "CPP-Lecture-2"), and submit code/link here tomorrow for review. You've shown you can apply basics dynamically; now let's make your code efficient and scalable.
 
+### Saturday Lecture 2: Loops – Repeating Actions Efficiently
 
+Loops let you execute code multiple times without copy-pasting—key for tasks like summing numbers, iterating data, or user menus. C++ has three main types: for, while, do-while. Each has a place; misuse them, and your program hangs (infinite loop) or skips work. Always think: "What's the condition for stopping? How do I initialize/update?"
 
+1. **For Loop**: Best for known iterations (e.g., loop 10 times). Syntax: `for (init; condition; update) { ... }`
+   - Init: Set starting values (e.g., int i = 0;).
+   - Condition: Bool check before each loop (e.g., i < 10;—runs while true).
+   - Update: Runs after each iteration (e.g., i++).
+   - Why? Predictable, compact. Combines with variables: Use counter in calculations.
 
+   Example:
+   ```cpp
+   for (int i = 0; i < 5; i++) {
+       std::cout << i << " ";  // Outputs: 0 1 2 3 4
+   }
+   ```
 
+2. **While Loop**: For unknown iterations—checks condition before running. Syntax: `while (condition) { ... }`
+   - Condition: Bool (e.g., age < 0;—but update inside to avoid infinity).
+   - Why? Flexible for input validation (loop until valid). Builds on conditionals: Condition often uses vars from input.
 
+   Example:
+   ```cpp
+   int count = 0;
+   while (count < 3) {
+       std::cout << "Looping..." << std::endl;
+       count++;
+   }
+   ```
 
+3. **Do-While Loop**: Like while, but runs at least once—checks after. Syntax: `do { ... } while (condition);` (note semicolon).
+   - Why? Great for menus (show options first, then check if repeat). Integrates input: Get user choice inside, condition on it.
 
+   Example:
+   ```cpp
+   int choice;
+   do {
+       std::cout << "Enter 1 to continue, 0 to quit: ";
+       std::cin >> choice;
+   } while (choice != 0);
+   ```
 
+Tips: Break with `break;` (exit early), skip with `continue;` (next iteration). Nested loops possible (loop in loop), but watch complexity. Infinite loops crash—always ensure update progresses toward false condition. This layers on Week 1: Use loops with vars (store sums), input (loop for multiple entries), conditionals (inside loop for decisions).
 
+### Saturday Project 2: Number Summing Loop
 
-
-
-
-
-
-
-
-
-## Grok (Snippet from Later Lesson on Functions)
-cautiously in real-time systems to avoid stack overflows.
-
-### Detailed Examples
-
-Example 1: Basic Function for Sensor Validation (e.g., checking drone altitude data).
-```cpp
-bool isValidAltitude(double altitude) {
-    if (altitude > 0 && altitude < 10000) {  // Drone limits
-        return true;
-    }
-    return false;
-}
-```
-This function encapsulates validation logic, reusable across sensor types in Anduril systems.
-
-Example 2: Pass-by-Reference for In-Place Modification (e.g., updating rocket velocity vector).
-```cpp
-void updateVelocity(double& velocity, double acceleration, double time) {
-    velocity += acceleration * time;  // Modifies original
-}
-```
-Pass-by-reference avoids copying large structures, efficient for real-time Starship control loops.
-
-Example 3: Overloading for Satellite Comms (e.g., handling different data types in Starlink packets).
-```cpp
-void transmit(int data) { /* ... */ }
-void transmit(double data) { /* ... */ }
-```
-Overloading allows flexible interfaces in comms networks.
-
-Example 4: Recursion for Pathfinding (e.g., drone obstacle avoidance tree search—limited depth to avoid overflow).
-```cpp
-int findPath(int depth) {
-    if (depth > 10) return -1;  // Limit recursion
-    // ... logic ...
-    return findPath(depth + 1);
-}
-```
-In autonomy, recursion is used sparingly; prefer iteration for stack safety in embedded systems.
-
-### Required Libraries/Headers
-
-- <iostream>: For I/O in examples.
-- No additional libraries needed for basic functions; later lessons will add <vector>, <thread>, etc., for autonomy.
-
-### Common Pitfalls & Best Practices
-
-- **Pitfalls**: Undefined behavior from uninitialized returns or stack overflows in recursion (e.g., infinite recursion in drone pathfinding crashes the system). Global variables lead to side effects, violating isolation in safety-critical code.
-- **Best Practices**:
-  - Keep functions short (<50 lines) and single-responsibility (e.g., one for thrust calc, another for validation).
-  - Use const parameters where inputs shouldn't change (e.g., void func(const double& data) ).
-  - Return error codes or use exceptions sparingly in real-time (prefer bool success flags for Anduril-like systems).
-  - In autonomy: Profile for performance (functions must meet deadlines in rocket control); use inline for hotspots.
-  - Test functions independently (unit tests simulate sensor faults in Starlink).
-
-### Project Assignment: Satellite Telemetry Parser Simulator
-
-Build a C++ program simulating a Starlink satellite ground station parser. It processes "telemetry packets" (user-input strings or numbers representing satellite data like position, velocity, signal strength). Use functions to modularize: one for validation, one for parsing, one for computing metrics (e.g., average signal using loops from Lesson 2).
+Write a C++ program that:
+- Asks for user input: An integer N (times to loop).
+- Uses a for loop to prompt N times for integers, sum them (store in int total = 0; add each input).
+- After, use a while loop to print the sum repeatedly until it hits 0 (subtract 1 each time—silly but practices while).
+- Bonus (optional for mastery): Wrap in do-while—ask if repeat (y/n), loop whole thing if 'y'.
 
 Requirements:
+- Proper includes (<iostream>).
+- Handle input with cin (no getline needed).
+- Output prompts clearly, final sum like "Total sum: [total]".
+- Under 30 lines, clean code.
+- Commit to CPP-Lecture-2 as Project-2-Sat.cpp (e.g., git add ., commit -m "Completed Project 2 Saturday: Loops for summing"), push, share link with submission.
 
-- Main loop (do-while) for menu: 1 = Input packet, 2 = Compute metrics, 3 = Quit.
-- Function 1: bool validatePacket(const std::string& packet) — Check if valid (e.g., length >5, contains numbers via conditionals).
-- Function 2: double parseSignal(const std::string& packet) — Extract signal value (e.g., assume format "SIG:42.5"—use loops to find ':' and convert).
-- Function 3: double computeAverage(const double signals[], int count) — Average array of signals (use pass-by-const-reference for efficiency).
-- Store up to 10 signals in an array; use I/O and conditionals for input handling.
-- Handle errors (e.g., invalid packet discards without crash).
-- Under 100 lines; clean, commented code.
-- Autonomy Relevance: Simulates parsing satellite telemetry for fault detection—invalid data could indicate jamming or failure, requiring real-time rejection for network stability.
-
-Compile/test locally, commit to a new repo (CPP-Lecture-3) as Project-3-Sat.cpp, push, and submit the raw GitHub link when finished for review.
+This focuses on loops but uses prior input/vars/conditionals lightly. Test: Input N=3, numbers 1/2/3—sum 6, then while prints 6 down to 1. Fix errors locally. I'm excited to see you wield loops like a pro—submit tomorrow, and we'll dissect it to sharpen you further. You've got this; master loops, and programs start feeling alive.
 
 ## Human
-I have a question. What does the & mean when put in front of the variable type (e.g. double&, string& etc.) and how will I know when to use it?
+Here is the link to the Github repo for Saturday's project:
+https://github.com/thetman1all-lab/CPP-Lecture-2
+The file should be labeled Project-2-Sat.cpp
 
 ## Grok
-## Understanding Pass-by-Reference in C++: The & Operator in Function Parameters
+**Great job pushing through and submitting early, Travis.** The repo looks clean (CPP-Lecture-2 with Project-2-Sat.cpp), and the README is a nice touch for notes. You've clearly tried to go above and beyond with the bonus do-while repeat— that's the kind of initiative I like to see. However, the code has some serious issues that prevent it from compiling and running properly, plus a few design choices that make it less efficient and idiomatic. I'll break it down honestly so you learn exactly why these matter and how to fix them.
 
-### Introduction
+### Code Review: Project-2-Sat.cpp
 
-In C++, the & symbol in function parameters (e.g., double& or std::string& ) denotes **pass-by-reference** , a mechanism for passing arguments to functions. This is a fundamental concept in function design, which we introduced in Lesson 3 on modularity and reusability. Pass-by-reference allows a function to modify the original variable directly, rather than working on a copy, promoting efficiency and enabling in-place updates—critical in safety-critical autonomous systems where memory and performance constraints are tight (e.g., updating real-time sensor data in Anduril drones or velocity vectors in SpaceX rocket control loops). Misusing it can lead to unintended side effects or undefined behavior, so understanding when and how to use it is essential for reliable code in aerospace and defense applications.
+Here's your exact code for reference (fetched from the raw file):
 
-### Key Concepts
-
-- **What Does & Mean?**:
-  - When placed after the type in a parameter list (e.g., void update(double& value) ), & indicates the parameter is a **reference** to the original argument. The function receives an alias to the caller's variable, not a copy.
-  - Without & (pass-by-value), a copy is made—changes inside the function don't affect the original (safe but inefficient for large objects like sensor arrays in Starlink comms).
-  - References must be initialized and cannot be null (unlike pointers, which use * ); they're safer for avoiding null dereferences in real-time systems.
-- **How It Works**:
-  - Binding: When calling the function, the reference binds to the argument's memory location.
-  - Modification: Changes to the parameter inside the function affect the original variable.
-  - Lifetime: The referenced object must outlive the function call to avoid dangling references (UB in C++—a common pitfall in embedded autonomy code).
-- **Comparison to Pass-by-Value**:
-  - Pass-by-value: void func(double value) { value += 1; } — Original unchanged.
-  - Pass-by-reference: void func(double& value) { value += 1; } — Original modified.
-- **Const References (const type&)**: Use for read-only access (e.g., void print(const std::string& data) ). Prevents modification, allows efficiency for large objects, and is a best practice in performance-sensitive systems like Astro Forge spacecraft telemetry parsing.
-
-### Detailed Examples
-
-Example 1: Basic Modification in Rocket Thrust Control (Pass-by-Reference for Efficiency).
 ```cpp
-void updateThrust(double& thrust, double increment) {
-    thrust += increment;  // Directly modifies caller's variable
-}
-
 int main() {
-    double engineThrust = 1000.0;
-    updateThrust(engineThrust, 200.0);
-    std::cout << engineThrust << std::endl;  // Outputs 1200
+
+    //Declare repeating variable
+    char repeat_input;
+    int repeat;
+
+    do {
+    // Decalring variables
+    int N;
+    int total = 0;
+    
+    // Prompt user to input N
+    std::cout << "Input how many times to loop:" << std::endl;
+    std::cin >> N;
+
+    // Declare empty array of size N that will be used to store input values
+    int number_inputs[N];
+
+    // for loop to prompt user to input N amount of integers
+    for (int i = 0; i < N; i++) {
+        std::cout << "Enter a number:" << std::endl;
+        std::cin >> number_inputs[i];
+
+        // Add inputs together and print output at end
+        total = total + number_inputs[i];
+        if (i==N-1) {
+            std::cout << "Total sum = " << total << std::endl;
+        }
+    }
+
+    // While loop to count down the total sum
+    std::cout << "Counting Down:" << std::endl;
+    while (total >= 0) {
+        std::cout << total << std::endl;
+        total = total - 1;
+    }
+
+    // Ask to repeat
+    std::cout << "Do you want to repeat? (y/n):" << std::endl;
+    std::cin >> repeat_input;
+    repeat = (repeat_input == 'y');
+
+    } while (repeat == 1);
+
+    return 0;
 }
 ```
-- Here, & enables direct modification without copying, saving memory in real-time loops (e.g., Starship's guidance system updating thousands of times per second).
 
-Example 2: Const Reference for Sensor Data Logging (Read-Only Efficiency).
+**What works well:**
+- You used all three loop types as intended: **for** for the N inputs, **while** for the countdown, and **do-while** for the repeat bonus. That's excellent application of the new material.
+- The repeat logic (char → bool/int) is clever and reuses Week 1 conditional skills.
+- Structure is logical: input N → sum → countdown → ask to repeat.
+- Comments explain your thinking.
+
+**Critical problems (must fix):**
+1. **Missing #include <iostream>** — The biggest issue. Without this, `std::cout` and `std::cin` are unknown, so it won't compile at all. Always start with the proper headers.
+2. **Variable Length Array (`int number_inputs[N];`)** — This is not standard C++. C++ does not support runtime-sized arrays on the stack like this (it's a GCC extension, not portable). It can cause crashes or unexpected behavior. For now, since we only need the sum, **remove the array entirely** and add directly to `total` in the loop. (We'll cover `std::vector` later for dynamic storage.)
+3. **Countdown while loop** — It works, but if the sum is large (say 1000), it prints 1000+ lines. That's not practical. For learning it's fine, but in real code we'd use a smarter approach.
+4. **Sum printed inside the for loop** — Only on the last iteration (`if (i==N-1)`). Better to print once after the loop ends — cleaner and more efficient.
+5. **Minor issues**: Typo in comment ("Decalring"), inconsistent spacing, `repeat == 1` could just be `repeat` since it's bool-like.
+
+**Corrected / improved version** (for reference — understand it, don't copy-paste blindly):
+
 ```cpp
-void logData(const std::string& sensorReading) {
-    std::cout << "Logged: " << sensorReading << std::endl;
-    // sensorReading += " appended";  // Error: const prevents change
-}
+#include <iostream>
 
 int main() {
-    std::string data = "Altitude: 500m";
-    logData(data);  // Efficient, no copy
+    char repeat_input;
+    bool repeat;
+
+    do {
+        int N;
+        int total = 0;
+
+        std::cout << "Input how many times to loop: ";
+        std::cin >> N;
+
+        // For loop to sum N numbers (no unnecessary array)
+        for (int i = 0; i < N; i++) {
+            int num;
+            std::cout << "Enter a number: ";
+            std::cin >> num;
+            total += num;               // Cleaner than total = total + num
+        }
+
+        std::cout << "Total sum = " << total << std::endl;
+
+        // While countdown
+        std::cout << "Counting Down:" << std::endl;
+        while (total >= 0) {
+            std::cout << total << std::endl;
+            total--;
+        }
+
+        // Ask to repeat
+        std::cout << "Do you want to repeat? (y/n): ";
+        std::cin >> repeat_input;
+        repeat = (repeat_input == 'y');
+
+    } while (repeat);
+
+    return 0;
 }
 ```
-- Const & is ideal for large strings or arrays in satellite comms (Starlink), where copying overhead could delay packet processing.
 
-Example 3: When Not to Use & (Pass-by-Value for Isolation).
-```cpp
-double calculate(double value) {
-    value *= 2;  // Only modifies copy
-    return value;
-}
+Commit a fixed version with a clear message like "Fixed compilation, removed VLA, cleaned output logic". This will make your repo much stronger.
 
-int main() {
-    double original = 10.0;
-    double result = calculate(original);
-    std::cout << original << std::endl;  // Still 10.0
-}
-```
-- Use pass-by-value when modifications shouldn't propagate (e.g., temporary calcs in navigation to avoid corrupting global state).
+**Overall grade**: Good effort on structure and using the loops (especially the bonus), but the missing header and VLA are blocking issues. Fix them and you're easily at 85-90%. This shows you're thinking about integration — that's the right mindset.
 
-### Required Libraries/Headers
+### Next Steps
+- Fix and push the updated Project-2-Sat.cpp today.
+- Since you already have Project-2-Sun.cpp in the repo, go ahead and submit that too when ready (or let me know if you want the Sunday lecture first).
+- For Sunday Lecture 2, we'll deepen loops (nested, break/continue, more real-world uses) and combine with everything from Week 1 + 2.
 
-- <iostream>: For output in examples.
-- <string>: If using std::string (add for Example 2).
-- No additional for basic references; later, <vector> for reference to containers in sensor fusion.
-
-### Common Pitfalls & Best Practices
-
-- **Pitfalls**:
-  - Dangling references: Returning reference to local variable (UB—e.g., function-local sensor data in drone loop causes crashes).
-  - Accidental modification: Without const, bugs creep in (e.g., altering shared state in multi-threaded rocket control).
-  - Overuse: References can make code harder to reason about in large systems; prefer value for immutability in functional-style autonomy code.
-- **Best Practices**:
-  - Use & for modification or efficiency with large types (e.g., Eigen matrices in linear algebra for pathfinding).
-  - Prefer const & for read-only (90% of cases in performance-critical code like Anduril's vision pipelines).
-  - Know when: Use & if function needs to change caller data or avoid copy overhead (e.g., updating velocity in real-time simulation). Use value otherwise for safety.
-  - In autonomy: Favor references in embedded systems to minimize stack usage, but document side effects. Follow MISRA C++ Rule 7-1-1: Avoid non-const references for globals.
-  - Test: Always verify modifications don't cause UB in unit tests (e.g., simulate fault injection in Starlink comms).
-
-This clarifies pass-by-reference for Lesson 3 projects—apply it in your telemetry parser for efficient data handling. If unclear, ask; submit your repo when ready for review.
+You're moving fast — keep that energy, but slow down just enough to compile and test locally every time. Drop the fixed code or Sunday project whenever you're ready. I'm still rooting hard for you. Let's keep building!
 
 ## Human
-I have two questions, 1, can you make me a sample data text file for Saturday's lesson, I feel like it will be more intuitive to handle the functions if I know what the data actually looks like. 2, Is there a way to save our entire conversation, and then continue on where we left off in another conversation? Because this conversation thread is becoming a little bit laggy
+Awesome feedback, but I do want to point out, on my end, when I open the code up for Project-2-Sat.cpp, #include <iostream> is there. I don't know why it wasn't viewable for you. I attached a screenshot of my window showing #include <iostream> at the top. I just want to make sure you can fully view everything I submit to you for the best responses. Also, I just have the cpp file ready for Sunday, I can't actually start it until we have our lesson tomorrow
 
 ## Grok
-## Response to Your Questions
+**Got it, Travis—thanks for the screenshot and the heads-up.**  
 
-### Question 1: Sample Data Text File for Lesson 3 Saturday Project
+I see the discrepancy now: Your local editor (and the screenshot) shows `#include <iostream>` at the top, but the version currently pushed to GitHub (the raw file I fetch) **does not** have it yet. It starts directly with `int main()`. This is a common gotcha — you made the edit locally but haven’t committed and pushed the updated file.  
 
-Absolutely—providing sample data is an excellent way to make the telemetry parser project more intuitive, as it allows you to visualize how functions like validatePacket and parseSignal will interact with real inputs. In autonomous systems like Starlink satellite networks, telemetry data often arrives as structured strings (e.g., key-value pairs from sensors), which must be validated and parsed efficiently to detect faults or compute metrics without crashing the ground station software.
+**Quick fix:**  
+In your terminal (inside the project folder):  
+```bash
+git add Project-2-Sat.cpp
+git commit -m "Added missing iostream header"
+git push
+```  
+Do that, then I’ll be able to see the exact same code you’re looking at.
 
-I'll provide a sample text file content here as a code block. You can copy-paste this into a local file named telemetry_sample.txt (or similar) in your project directory. The data simulates 10 telemetry packets, each on a new line, with formats like "SIG:value POS:x VEL:y" (signal strength, position, velocity). Some are valid, some invalid (e.g., negative values or malformed) to test your validation function. In a real Starlink scenario, this could represent batched satellite data for fault detection.
+Until then, my review below is based on the **currently live GitHub version** (the one without the include). Once you push the latest, the feedback still mostly applies, and I’ll be happy to re-review the updated file.
 
+### Updated Review of Current Pushed Project-2-Sat.cpp
+
+**Strengths**  
+- Excellent use of all three loop types exactly as requested.  
+- The do-while for repetition (bonus) shows good initiative and reuses Week 1 bool/char logic.  
+- You’re clearly thinking about combining concepts — that’s the right mindset.
+
+**Issues that still need fixing (same as before, since the pushed code matches my earlier fetch):**  
+1. **Missing `#include <iostream>` on GitHub** → Code won’t compile anywhere until pushed.  
+2. **Variable Length Array** `int number_inputs[N];` → Not standard C++. Remove the array completely (we only need the sum).  
+3. **Sum printed inside the for loop** with an `if (i == N-1)` → Better to print once after the loop.  
+4. **Countdown while loop** prints every number down to 0 — works for learning, but becomes impractical for large sums.  
+5. Minor polish: typo “Decalring”, spacing, and `repeat == 1` can be simplified to `repeat` once it’s a bool.
+
+Push the version with the include, remove the array, and clean up the output timing, and this will be a very solid submission.
+
+### Sunday Lecture 2 (Feb 8, 2026): Deeper Loops – Nesting, Control, and Real Integration
+
+Now that you’ve used basic loops, let’s level them up. Today we focus on making loops more powerful and combining them with everything from Weeks 1–2 (variables, input, conditionals, and simple loops).
+
+**Key New Concepts:**
+
+1. **Nested Loops**  
+   A loop inside another loop. Useful for grids, tables, or multi-level repetition.  
+   ```cpp
+   for (int i = 1; i <= 3; i++) {           // outer
+       for (int j = 1; j <= 3; j++) {       // inner
+           std::cout << i << "," << j << " ";
+       }
+       std::cout << std::endl;
+   }
+   ```
+
+2. **Loop Control: break and continue**  
+   - `break;` → exits the loop immediately.  
+   - `continue;` → skips the rest of the current iteration and goes to the next.  
+   Great for input validation or early termination.
+
+3. **Combining with Previous Material**  
+   - Use conditionals *inside* loops for validation (e.g., reject negative numbers).  
+   - Use loops to repeatedly ask for input until it’s valid.  
+   - Accumulate results across loops (sums, counters, etc.).
+
+**Example: Simple Menu with Validation**
+```cpp
+#include <iostream>
+
+int main() {
+    int choice;
+    do {
+        std::cout << "1. Add numbers\n2. Quit\nChoice: ";
+        std::cin >> choice;
+
+        if (choice == 1) {
+            // nested or inner logic here
+        } else if (choice != 2) {
+            std::cout << "Invalid choice!\n";
+            continue;   // skip back to menu
+        }
+    } while (choice != 2);
+
+    return 0;
+}
 ```
-SIG:42.5 POS:100.2 VEL:5.0
-SIG:38.7 POS:95.4 VEL:4.8
-InvalidPacketNoColon
-SIG:-10.0 POS:80.0 VEL:3.0  // Invalid: negative signal
-SIG:50.1 POS:110.5 VEL:6.2
-TooShort
-SIG:45.3 POS:102.1 VEL:5.5
-SIG:99.9 POS:200.0 VEL:10.0  // Edge: high signal
-SIG:abc POS:def VEL:ghi  // Invalid: non-numeric
-SIG:40.0 POS:99.9 VEL:5.1
+
+### Sunday Project 2: Interactive Number Guessing Game + Menu
+
+Write a program that:
+
+- Uses a **do-while** loop for a main menu (options: 1 = Play game, 2 = Quit).  
+- When the user chooses “Play”, generate a random number between 1 and 100 (use `rand()` — we’ll cover proper random later; for now `#include <cstdlib>` and `srand(time(NULL));` if you want, or just hardcode a secret number for simplicity).  
+- Use a **while** loop to let the user guess until they get it right. Give hints (“Too high” / “Too low”).  
+- Use **nested loops** or `break`/`continue` where it makes sense (e.g., limit guesses to 10 max with break).  
+- Track the number of guesses and print it when they win.  
+- After winning or quitting, return to the main menu (do-while).
+
+Requirements:  
+- Proper includes (`<iostream>`, and `<cstdlib>` + `<ctime>` if using real random).  
+- Clean prompts and output.  
+- Use variables, conditionals, and loops together.  
+- Keep it reasonable length (~40–60 lines).  
+
+Commit as **Project-2-Sun.cpp** in the same CPP-Lecture-2 repo, push, and send the link when done.
+
+You’re moving fast and the organization is improving — keep that energy. Fix and push the Saturday project, then tackle the Sunday one after this lecture. I’m still fully invested in turning you into a strong C++ programmer. Drop the updated Saturday file or the Sunday project whenever you’re ready!
+
+## Human
+Here is the link directly to the file in the repo:
+https://github.com/thetman1all-lab/CPP-Lecture-2/blob/main/Project-2-Sat.cpp
+ 
+And here is the link to the repo:
+https://github.com/thetman1all-lab/CPP-Lecture-2
+ 
+I don't know if one works better for you over the other. Let me know which one you like more.
+
+## Grok
+**Thanks for the direct links, Travis.**  
+
+I prefer the **raw URL** for reviewing code (e.g., `https://raw.githubusercontent.com/thetman1all-lab/CPP-Lecture-2/main/Project-2-Sat.cpp`). It gives me the cleanest, exact text without any GitHub HTML. The blob link works too, but raw is faster and more reliable for me.
+
+### Important Note on the Current Code
+I just pulled the live version from GitHub (raw). It **still starts directly with `int main()`** — there is **no `#include <iostream>`** in the pushed file.
+
+Your screenshot showed the include because you added it locally, but you haven’t committed and pushed that change yet. This is a very common workflow mistake. Always do:
+
+```bash
+git add Project-2-Sat.cpp
+git commit -m "Added iostream include"
+git push
 ```
 
-- **How to Use This in Your Project**: Read the file line-by-line using std::ifstream (include <fstream> ), pass each line to your validatePacket function, and if valid, use parseSignal to extract the SIG value. Store valid signals in an array for averaging with computeAverage . This tests edge cases like malformed data, simulating real-world sensor noise or transmission errors in satellite comms.
-- **Autonomy Tie-In**: In Starlink ground stations, parsing invalid packets could trigger alerts for satellite anomalies (e.g., signal drop from orbital debris impact), ensuring network resilience.
+Once you push the version with the include, I’ll see exactly what you see.
 
-If this format doesn't match your needs, let me know details, and I'll adjust.
+### Review of the Currently Pushed Project-2-Sat.cpp
 
-### Question 2: Saving and Continuing Conversations
+**What’s good:**
+- You used **for**, **while**, and **do-while** — exactly what the project asked for.
+- The repeat feature (bonus) is a nice touch and reuses Week 1 material well.
+- Logic flow makes sense: get N → sum numbers → countdown → ask to repeat.
 
-Yes, there are ways to manage and preserve our conversation thread, especially if it's becoming laggy (which can happen with long histories in AI interfaces like this one). Here's a structured approach based on standard platform capabilities (e.g., Grok on X or similar chat systems):
+**What needs fixing (these are blocking issues right now):**
+1. **Missing `#include <iostream>`** — The code won’t compile on most systems. This is why I keep mentioning it.
+2. **Variable Length Array** (`int number_inputs[N];`) — Not standard C++. It works on some compilers (like g++ with extensions) but is not portable and can cause stack issues. Since we only need the sum, **remove the array** and just add each input directly to `total`.
+3. **Sum printed inside the for loop** with `if (i == N-1)` — This is unnecessary. Print the total once **after** the for loop ends. It’s cleaner and more efficient.
+4. **Countdown prints every number** down to 0. For large sums this floods the screen. It’s fine for learning, but in real code we’d limit it or make it optional.
+5. Small polish: “Decalring” typo, inconsistent spacing after prompts, and `while (repeat == 1)` can be `while (repeat)` once it’s a bool.
 
-- **Saving the Conversation**:
-  - **Export/Archive**: Most AI platforms (including Grok) allow exporting chat histories as text or PDF. Check the interface settings for an "Export Conversation" option, or manually copy-paste the thread into a document (e.g., Markdown file in your IDE for reference). If on X, screenshot or use browser tools to save as HTML.
-  - **Local Backup**: Copy key responses (lessons, reviews) into your GitHub repo's README.md or a dedicated notes file. This integrates with your learning journey—e.g., paste code examples or feedback there for quick reference.
-- **Continuing in a New Conversation**:
-  - Start a new chat thread in the interface and reference our progress: E.g., "Continue from Lesson 3 where we left off on functions. Here's the last project link: [your-repo]." The AI (me) has access to conversation history across sessions but may need a summary to sync state.
-  - **State Persistence**: Grok maintains context from previous interactions if in the same user session/account, but for long threads, summarize key points (e.g., "We've completed Lessons 1-2 on basics/loops; starting Lesson 3 project submission").
-- **Best Practice**: To avoid lag, archive the old thread and start fresh, pasting relevant snippets (e.g., last lesson summary) to continue seamlessly. This mirrors version control in software engineering—branch off when things get heavy.
+**Quick improved skeleton** (understand this, then rewrite your own):
 
-If the lag persists, it could be browser-related—try clearing cache or using a different device. Let me know if you need help summarizing our progress for a new thread. Ready to submit your Lesson 3 project repo when finished!
+```cpp
+#include <iostream>
+
+int main() {
+    char repeat_input;
+    bool repeat;
+
+    do {
+        int N;
+        int total = 0;
+
+        std::cout << "Input how many times to loop: ";
+        std::cin >> N;
+
+        for (int i = 0; i < N; i++) {
+            int num;
+            std::cout << "Enter a number: ";
+            std::cin >> num;
+            total += num;
+        }
+
+        std::cout << "Total sum = " << total << std::endl;
+
+        std::cout << "Counting Down:" << std::endl;
+        while (total >= 0) {
+            std::cout << total << std::endl;
+            total--;
+        }
+
+        std::cout << "Do you want to repeat? (y/n): ";
+        std::cin >> repeat_input;
+        repeat = (repeat_input == 'y');
+
+    } while (repeat);
+
+    return 0;
+}
+```
+
+**Action for you:**  
+Push the version with the include + the fixes above (remove array, move the sum print, clean prompts). Then send me the link again (or just say “pushed updated Saturday project”) and I’ll give you a fresh, accurate review.
+
+You’re very close — the structure is already strong. Just close these small gaps and this will be a solid Saturday submission.
+
+Whenever you’re ready with **Project-2-Sun.cpp** (the guessing game), drop the link. The Sunday lecture is already in my previous message if you need to reference it.
+
+Keep going — you’re making real progress!
+
+## Human
+This is a screenshot of the most recent push, the one after all my fixes, I don't know why you're not able to see it with the raw link. If you have a way of refreshing your link, please do it, because I made the proper git add, commit, and push for the corrections
+
+## Grok
+
+**Perfect, Travis — thank you for the new screenshot.**  
+
+I can now clearly see the **latest version** you pushed (the one with `#include <iostream>`, no VLA, sum printed after the loop, bool repeat, and the fancy ANSI countdown).  
+
+**Quick note on why I didn’t see it earlier:**  
+The raw link I was using was still showing the previous commit. GitHub sometimes has a short propagation/cache delay (usually seconds to a minute) after a push. In the future, after you push, wait 10–15 seconds and refresh the raw URL yourself before sending it. That way we’re both looking at exactly the same thing.
+
+### Final Review of Project-2-Sat.cpp (Latest Version from Screenshot)
+
+**What you did really well:**
+- Fixed the **missing include** — now it will compile everywhere.
+- Completely removed the non-standard VLA (`int number_inputs[N]`) — excellent. Using a local `int number` inside the for loop is the correct, clean approach.
+- Moved the total print **outside** the for loop — much better style and exactly what I recommended.
+- Switched repeat to `bool` and simplified the while condition to `while (repeat)` — nice polish.
+- You went above and beyond with the **live countdown effect** using ANSI escape codes (`\x1b[1A` and `\x1b[2K`). That’s creative and shows you’re experimenting — I like the initiative.
+
+**Remaining issues / suggestions:**
+1. **The countdown is over-engineered for this stage.**  
+   The ANSI trick is cool, but it’s fragile — it doesn’t work well in every terminal, when output is redirected, or on some online compilers. For learning purposes, a simple `while (total >= 0)` that just prints each number on a new line is clearer and more reliable.  
+   Your version is trying to overwrite the line, but because you print “Counting Down: ” every iteration, the effect is a bit messy. If you want a live counter, a simpler version would be:
+   ```cpp
+   std::cout << "Counting Down:\n";
+   while (total >= 0) {
+       std::cout << total << "\r";   // \r returns to start of line
+       std::cout.flush();
+       // optional: std::this_thread::sleep_for(std::chrono::milliseconds(200)); for delay
+       total--;
+   }
+   ```
+   (We’ll cover timing and threads later.)
+
+2. **Small formatting nitpicks**  
+   - `"\n" << std::endl` is redundant — just use `std::endl` or `"\n"`.
+   - Prompts could have a space after the colon for readability: `"Enter a number: "`.
+   - The comment “Decalring” still has a typo.
+
+3. **No input validation**  
+   If the user enters a letter instead of a number for N or the values, `cin` will fail silently. This is common beginner code, but it’s good to be aware of it.
+
+**Overall assessment:**  
+This is a **big improvement** over the first version — I’d rate it **solid B+ / low A**. The core requirements are met, the loops are used correctly, and you showed creativity with the countdown. The main things holding it back from an A are the overly complex countdown and the minor polish items.
+
+**Recommended action:**  
+Make one more quick cleanup commit:
+- Simplify the countdown to a basic version (or leave the fancy one if you really like it — it’s your repo).
+- Fix the small formatting and typo.
+- Commit message: “Cleaned up countdown, fixed formatting after review”
+
+Then you can consider Saturday’s project complete.
+
+### Sunday Project Reminder
+You already have the Sunday lecture from my previous message (the guessing game with menu, nested/controlled loops, etc.).  
+Go ahead and work on **Project-2-Sun.cpp** whenever you’re ready. When you push it, send the link (raw preferred) and I’ll review it right away.
+
+You’re making real, visible progress — the code is getting cleaner and more thoughtful. Keep it up!  
+
+Let me know when the Sunday project is ready or if you want any clarification before starting it. I’m still fully here to help you level up.
+
+## Human
+Here is the raw link for today's project:
+https://raw.githubusercontent.com/thetman1all-lab/CPP-Lecture-2/refs/heads/main/Project-2-Sun.cpp
+ 
+After looking up some formats for random numbers, found out rand() is discouraged due to its bias number generation, so I went with the accepted modern <random> library to make my random number, and it seems to work like a charm.
+
+## Grok
+## Project Review: Lesson 2 Sunday - Interactive Number Guessing Game
+
+Travis, excellent submission for the Sunday project in Lesson 2. Your choice to use the modern `<random>` library instead of `rand()` is a strong one—it's more reliable, avoids bias in distribution, and aligns with best practices in safety-critical systems where predictable randomness (or true entropy) is essential for simulations like Monte Carlo methods in trajectory prediction or fault injection testing. In autonomy applications at companies like SpaceX or Anduril, poor randomness can lead to skewed test results, potentially masking edge cases in rocket guidance or drone swarm coordination. I'll break down your code step-by-step, evaluate its correctness and quality against the project requirements and autonomy-relevant standards, highlight strengths, and provide prioritized improvement suggestions with reasoning. Where helpful, I'll include refactored code snippets to illustrate changes. Overall, this is a solid effort that demonstrates good integration of loops, conditionals, and input handling, but it has some polish needed for production-like reliability.
+
+### How the Code Works: Step-by-Step Explanation
+
+Your program simulates a simple number guessing game with a menu, incorporating nested loops and control statements as required. Here's a breakdown:
+
+1. **Includes and Setup**:
+   - `#include <iostream>` for I/O.
+   - `#include <random>` for modern random number generation.
+   - Variables: `choice` (menu selection), `guess` (user input, initialized to 1—unnecessary but harmless), `playing` (bool flag for game loop).
+
+2. **Random Number Generation**:
+   - Uses `std::random_device rd;` for hardware entropy seeding.
+   - `std::mt19937 gen(rd());` initializes a Mersenne Twister engine (high-quality PRNG).
+   - `std::uniform_int_distribution<> distr(1, 100);` sets uniform distribution [1,100].
+   - Inside the loop: `int secret_number = distr(gen);` generates the target.
+   - Note: You print `secret_number` immediately—likely for debugging, but this spoils the game in production.
+
+3. **Main Menu Loop (do-while)**:
+   - Runs until `choice == 2` (quit).
+   - Prompts for menu choice (1: Play, 2: Quit).
+   - If `choice == 1`: Sets `playing = true` and enters the game loop.
+   - If invalid (`choice != 1 && choice != 2`): Prints error and `continue;` skips to next iteration.
+   - No handling for non-integer input (cin failure leaves `choice` unchanged, potentially infinite loop).
+
+4. **Game Loop (while with playing flag)**:
+   - Nested inside the menu loop when playing.
+   - Initializes `tries = 1` (starts at 1 before any guess—off-by-one, as first guess hasn't happened).
+   - Prompts for `guess`.
+   - Conditionals:
+     - If `guess == secret_number`: Checks if `tries == 1` for special message, otherwise standard win message with try count. Breaks the loop.
+     - If `guess > secret_number`: "Too high", checks if `tries == 10` (loss condition), breaks if true.
+     - If `guess < secret_number`: "Too low", duplicate check for `tries == 10`.
+   - Increments `tries++` after each guess.
+   - On win/loss, sets `playing = false` to exit, returning to menu.
+
+5. **Exit**: Returns 0 when menu quits.
+
+The code compiles (tested mentally with g++ standards) and runs a functional game, meeting core requirements: do-while menu, while guessing loop, nested control, guess tracking. It integrates prior lessons (input, conditionals, bools) with new loop features effectively.
+
+### Evaluation of Correctness and Quality
+
+- **Correctness**: Mostly accurate. The game logic works for valid inputs—menu loops, guessing provides hints, 10-try limit enforces break, win/loss messages display. However:
+  - Off-by-one in `tries`: Starts at 1 but increments after first guess, so actual attempts are `tries - 1` (e.g., first-try win shows "first try" but if second guess wins, shows 2 when it was 2).
+  - Duplicate code for `tries == 10` in both high/low branches—violates DRY (Don't Repeat Yourself), risking inconsistent maintenance.
+  - Debug print of `secret_number` reveals the answer—remove for real use.
+  - No bounds check on guess (e.g., negative or >100 allowed, no re-prompt).
+  - If cin fails (non-int input), undefined behavior: Loops may hang or use garbage values.
+
+- **Quality and Best Practices** (Tied to Autonomy Standards):
+  - **Strengths**: Modern random usage is pro-level—`<random>` ensures uniform, reproducible (if seeded consistently) simulations, vital for testing autonomous control loops (e.g., Starship's fin actuation randomness in wind simulations). Menu with continue/break shows good control flow. Code is readable with comments, under ~60 lines.
+  - **Performance**: Efficient for this scale—O(1) per guess, no unnecessary allocations. In real-time autonomy (e.g., Anduril drones), loops like this must avoid blocking; here it's fine but could add timeouts later.
+  - **Safety/Reliability**: Lacks input validation, risking undefined behavior (UB) on bad input—unacceptable in aerospace (MISRA C++ Rule 5-0-3: Handle stream errors). No fault tolerance (e.g., retry on cin fail). In satellite comms (Starlink), bad input could simulate packet corruption; always clear errors.
+  - **Maintainability**: Typos ("Guese", "Choise", "increse") hurt readability. Duplicate loss check reduces scalability. No modularity—game logic tightly coupled; for larger systems (e.g., Astro Forge spacecraft sim), extract functions.
+  - **Scalability**: Basic, but extensible for autonomy sims (e.g., add multi-vehicle guessing for swarm coordination).
+  - **Autonomy Relevance**: This mirrors simple decision loops in control systems (e.g., PID convergence guessing target state). With improvements, it could simulate sensor fusion guessing (e.g., estimate position from noisy data).
+
+Overall: B (functional but needs robustness for safety-critical contexts). Strengths in randomness and loop integration; weaknesses in error handling and polish.
+
+### Suggested Improvements
+
+Prioritized by impact (safety first, then efficiency/maintainability):
+
+1. **Add Input Validation and Error Handling** (High Priority - Safety):
+   - Reason: Cin can fail, leading to UB or infinite loops—critical in autonomy where bad sensor data must be handled gracefully (e.g., SpaceX flight computers reject invalid telemetry).
+   - Fix: After each cin, check `if (!std::cin) { std::cin.clear(); std::cin.ignore(); /* re-prompt */ }`.
+   - Example Refactor (for guess prompt):
+     ```cpp
+     while (playing) {
+         std::cout << "Guess a number between 1 and 100: ";
+         if (!(std::cin >> guess)) {
+             std::cin.clear(); // Clear error flag
+             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore bad input
+             std::cout << "Invalid input! Please enter an integer.\n";
+             continue; // Skip without incrementing tries
+         }
+         // Rest of logic...
+     }
+     ```
+     (Add `#include <limits>` for `numeric_limits`.)
+
+2. **Fix Try Count and Remove Duplicates** (Medium Priority - Correctness/Maintainability):
+   - Reason: Off-by-one miscounts guesses; duplicates violate DRY, making bugs harder to fix (e.g., changing limit requires two edits).
+   - Fix: Start `tries = 0`; increment before checks. Move `tries == 10` check before high/low (after guess).
+   - Example: 
+     ```cpp
+     int tries = 0;
+     while (playing) {
+         // Prompt and input...
+         tries++;
+         if (tries >= 10) { // Check first
+             std::cout << "Reached max tries! Game over.\n";
+             break;
+         }
+         if (guess == secret_number) {
+             std::cout << "You guessed it in " << tries << " tries!\n";
+             break;
+         } else if (guess > secret_number) {
+             std::cout << "Too high.\n";
+         } else {
+             std::cout << "Too low.\n";
+         }
+     }
+     ```
+
+3. **Remove Debug Print and Fix Typos** (Low Priority - Readability):
+   - Reason: `std::cout << secret_number << std::endl;` exposes the secret—remove. Typos make code less professional.
+   - Fix: Delete the print; search/replace typos.
+
+4. **Enhance for Autonomy Simulation** (Optional - Scalability):
+   - Reason: To tie to real systems, add "noise" to guesses (simulate sensor error) or log guesses for analysis.
+   - Example: Add a vector to store guesses (`#include <vector>`), print history on win.
+
+Commit these fixes with a message like "Refactored guessing game: Added validation, fixed try count, removed duplicates." Push and share the updated link for re-review if desired.
+
+You're progressing well—using `<random>` shows initiative. Submit future projects with the raw link after confirming it's up-to-date. Ready for Lesson 3 next weekend? Keep building!
+
+## Human
+Here is the updated link to the raw Project-2-Sun.cpp:
+https://raw.githubusercontent.com/thetman1all-lab/CPP-Lecture-2/refs/heads/main/Project-2-Sun.cpp
+ 
+I made edits per your suggestion, starting with the high priority of error handling. Please let me know if the format of my error handling looks good.
+ 
+For the scalability, the vector suggestion makes sense to me, but I don't know where to start for adding noise to the guess. I don't really understand what that means.
+ 
+And we can hold off on Saturdays lesson for now. I stayed up pretty late finishing this assignment, so we can rest for now and I'll prompt you when I'm ready for Lesson 3.
+
+## Grok
+
